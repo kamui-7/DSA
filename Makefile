@@ -1,17 +1,17 @@
 CC = gcc 
-CFLAGS = -pedantic -Wall -Wextra -march=native
+CC_FLAGS = -pedantic -Wall -Wextra -march=native
 DEBUG = -DDEBUG -ggdb3
 RM = rm -f
 
 BIN_PATH = build
 SRC_PATH = src
 
-CC_FLAGS = $(CFLAGS) $(DEBUG)
+CFLAGS = $(CC_FLAGS) $(DEBUG)
 
 SRC = $(shell find src -name *.c -type f)
-BIN = $(basename $(patsubst src%,build%,$(SRC)))
+BIN = $(basename $(patsubst $(SRC_PATH)%,$(BIN_PATH)%,$(SRC)))
 
 all: $(BIN)
 
-$(BIN): %: $(SRC)
+$(BIN): $(BIN_PATH)/%: $(SRC_PATH)/%.c
 	$(CC) $(CC_FLAGS) -o $@ $<
