@@ -3,28 +3,28 @@
 #include <stdbool.h>
 #include <time.h>
 
-struct array {
+struct Array {
     int *ptr;
     int len;
     int capacity;
 };
 
-void resize(struct array* arr, int new_size) {
+void resize(struct Array* arr, int new_size) {
     arr->ptr = (int*) realloc(arr->ptr, sizeof(int) * new_size);
     arr->capacity = new_size;
 }
 
-void set(struct array* arr, int indx, int item) {
+void set(struct Array* arr, int indx, int item) {
     *(arr->ptr+indx) = item;
 }
 
-void print_array(struct array* arr) {
+void print_array(struct Array* arr) {
     for (int i = 0; i < arr->len; i++) {
         printf("%d\n", *(arr->ptr+i));
     }
 }
 
-void push(struct array* arr, int item) {
+void push(struct Array* arr, int item) {
     if (arr->len == arr->capacity) {
         resize(arr, arr->capacity * 2);
     }
@@ -33,7 +33,7 @@ void push(struct array* arr, int item) {
     arr->len++;
 }
 
-int find(struct array* arr, int key) {
+int find(struct Array* arr, int key) {
     for (int i = 0; i < arr->len; i++)  {
         if (*(arr->ptr+i) == key) {
             return i;
@@ -42,15 +42,15 @@ int find(struct array* arr, int key) {
     return -1;
 }
 
-bool is_empty(struct array* arr) {
+bool is_empty(struct Array* arr) {
     return arr->len == 0;
 }
 
-int at(struct array* arr, int indx) {
+int at(struct Array* arr, int indx) {
     return *(arr->ptr+indx);
 }
 
-int pop(struct array* arr) {
+int pop(struct Array* arr) {
     if (arr->len == (arr->capacity)/4) {
         resize(arr, arr->capacity/2);
     }
@@ -65,7 +65,7 @@ int pop(struct array* arr) {
 }
 
 
-void insert(struct array* arr, int indx, int item) {
+void insert(struct Array* arr, int indx, int item) {
     if (arr->len == arr->capacity) {
         resize(arr, arr->capacity * 2);
     }
@@ -79,11 +79,11 @@ void insert(struct array* arr, int indx, int item) {
     arr->len++;
 }
 
-void prepend(struct array* arr, int item) {
+void prepend(struct Array* arr, int item) {
     insert(arr, 0, item); 
 }
 
-void delete(struct array* arr, int indx) {
+void delete(struct Array* arr, int indx) {
     if (arr->len == (arr->capacity)/4) {
         resize(arr, arr->capacity/2);
     }
@@ -96,7 +96,7 @@ void delete(struct array* arr, int indx) {
     arr->len--;
 }
 
-void remove_itm(struct array* arr, int item) {
+void remove_itm(struct Array* arr, int item) {
     for (int i = 0; i < arr->len; i++)  {
         if (*(arr->ptr+i) == item) {
             delete(arr, i);
@@ -111,7 +111,7 @@ int main() {
     bsize = 16, l = 0;
     p = (int*) malloc(sizeof(int) * bsize);
 
-    struct array arr = {p, l, bsize};
+    struct Array arr = {p, l, bsize};
 
     for (int i = 0; i < 10; i++) {
         push(&arr, i);

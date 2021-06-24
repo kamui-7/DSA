@@ -1,6 +1,6 @@
 CC = gcc 
 CC_FLAGS = -pedantic -Wall -Wextra -march=native
-DEBUG = -DDEBUG -ggdb3
+DEBUG = -DDEBUG -g
 RM = rm -f
 
 BIN_PATH = build
@@ -14,4 +14,4 @@ BIN = $(basename $(patsubst $(SRC_PATH)%,$(BIN_PATH)%,$(SRC)))
 all: $(BIN)
 
 $(BIN): $(BIN_PATH)/%: $(SRC_PATH)/%.c
-	$(CC) $(CC_FLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ $<
