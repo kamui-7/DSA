@@ -20,8 +20,9 @@ void set(struct Array* arr, int indx, int item) {
 
 void print_array(struct Array* arr) {
     for (int i = 0; i < arr->len; i++) {
-        printf("%d\n", *(arr->ptr+i));
+        printf("%d ", *(arr->ptr+i));
     }
+    printf("\n");
 }
 
 void push(struct Array* arr, int item) {

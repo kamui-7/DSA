@@ -46,9 +46,10 @@ struct Node* value_at(struct Node* head, int indx) {
 
 void print_ll(struct Node* head) {
     while (head != NULL) {
-        printf("%d\n", head->data);
+        printf("%d ", head->data);
         head = head->next;
     }
+    printf("\n");
 }
 
 struct Node* create_elm(int key) {
