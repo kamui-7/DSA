@@ -4,3 +4,4 @@ build/
 *.so
 *.so.*
 .cache/
+compile_commands.json
