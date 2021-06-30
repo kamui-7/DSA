@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <cmocka.h>
 #include <malloc.h>
+#include <stdio.h>
 #include "array.h"
 
 struct teststate_t {
@@ -98,6 +99,7 @@ void it_removes_by_key(void **state) {
 }
 
 int main(void) {
+    printf("Starting array tests...\n");
     const struct CMUnitTest tests[] = {
         cmocka_unit_test_setup_teardown(it_pushes_item, test_setup,
                                         test_teardown),

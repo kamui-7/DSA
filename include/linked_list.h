@@ -11,7 +11,6 @@ bool empty(struct Node *head);
 int size(struct Node *head);
 struct Node *value_at(struct Node *head, int indx);
 void print_ll(struct Node *head);
-struct Node *create_elm(int key);
 void push_front(struct Node **head_ptr, int key);
 struct Node *pop_front(struct Node **head_ptr);
 void push_back(struct Node **head_ptr, int key);
