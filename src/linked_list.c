@@ -94,7 +94,7 @@ struct Node *pop_back(struct Node **head_ptr) {
     return last;
 }
 
-void insert(struct Node **head_ptr, int index, int key) {
+void insert_node(struct Node **head_ptr, int index, int key) {
     struct Node *head = *head_ptr;
     int s = 0;
     while (head != NULL && s < index) {
@@ -110,7 +110,7 @@ void insert(struct Node **head_ptr, int index, int key) {
     new_elm->next = after_indx;
 }
 
-void erase(struct Node **head_ptr, int index) {
+void erase_node(struct Node **head_ptr, int index) {
     struct Node *head = *head_ptr;
     int s = 0;
     while (head != NULL && s < index) {

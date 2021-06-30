@@ -6,8 +6,6 @@ struct Array {
     int capacity;
 };
 
-void resize(struct Array *arr, int new_size);
-void set(struct Array *arr, int indx, int item);
 void print_array(struct Array *arr);
 void push(struct Array *arr, int item);
 int find(struct Array *arr, int key);
