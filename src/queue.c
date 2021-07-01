@@ -25,11 +25,3 @@ struct Node *dequeue_lq(struct ListQueue *lq) {
 }
 
 bool empty_lq(struct ListQueue *lq) { return lq->head == NULL; }
-
-void print_lq(struct ListQueue *lq) {
-    while (lq->head != NULL) {
-        printf("%d ", lq->head->data);
-        lq->head = lq->head->next;
-    }
-    printf("\n");
-}

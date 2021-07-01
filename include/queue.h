@@ -1,9 +1,5 @@
 #include <stdbool.h>
-
-struct Node {
-    int data;
-    struct Node *next;
-};
+#include "linked_list.h"
 
 struct ListQueue {
     struct Node *head;
