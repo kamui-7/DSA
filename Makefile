@@ -1,7 +1,7 @@
 CC = gcc 
 CC_FLAGS = -pedantic -Wall -Wextra -march=native
 DEBUG = -DDEBUG -g
-RM = rm -f
+RM = rm -rf
 
 OUT_DIR = build
 SRC_DIR = src
@@ -19,7 +19,7 @@ TEST_OBJ = $(shell echo "$(TEST_SRC:.c=)" | sed -e "s/$(TEST_DIR)\//$(subst /,\/
 CFLAGS = $(CC_FLAGS) $(DEBUG) -I$(INC_DIR)
 TEST_LDFLAGS = -lcmocka
 
-all: check
+default: check
 
 $(OUT_DIR)/$(TARGET_LIB): $(OBJ)
 	ar rcs $@ $(OBJ)
@@ -40,4 +40,4 @@ $(TEST_OUT_DIR)/:
 	mkdir -p $@
 
 clean:
-	rm -rf $(OUT_DIR)
+	$(RM) $(OUT_DIR)
