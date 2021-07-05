@@ -3,6 +3,7 @@
 struct Entry {
     int key;
     int value;
+    bool deleted;
 };
 
 struct HashTable {

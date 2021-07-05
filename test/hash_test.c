@@ -35,8 +35,19 @@ void it_adds_and_gets_pair(void **state) {
 void it_exists(void **state) {
     struct HashTable ht = ((struct teststate_t *)(*state))->ht;
     add(&ht, 1732, 777);
-    bool e = exists(&ht, 1731);
+    bool e = exists(&ht, 1732);
     assert_int_equal(e, true);
+}
+
+void it_deletes_entry(void **state) {
+    bool e;
+    struct HashTable ht = ((struct teststate_t *)(*state))->ht;
+    add(&ht, 1732, 777);
+    e = exists(&ht, 1732);
+    assert_int_equal(e, true);
+    remove_item(&ht, 1732);
+    e = exists(&ht, 1732);
+    assert_int_equal(e, false);
 }
 
 int main(void) {
@@ -45,6 +56,8 @@ int main(void) {
         cmocka_unit_test_setup_teardown(it_adds_and_gets_pair, test_setup,
                                         test_teardown),
         cmocka_unit_test_setup_teardown(it_exists, test_setup, test_teardown),
+        cmocka_unit_test_setup_teardown(it_deletes_entry, test_setup,
+                                        test_teardown),
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

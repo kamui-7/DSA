@@ -1,5 +1,6 @@
 #include "hash.h"
 #include <stdlib.h>
+#include <memory.h>
 
 int hash(int k, int m) { return k % m; }
 
@@ -8,7 +9,7 @@ int avail_index(struct HashTable *ht, int key) {
     if (ht->num_items == ht->capacity) {
         return -1;
     }
-    while (ht->data[index] != NULL) {
+    while (ht->data[index] != NULL && ht->data[index]->deleted != true) {
         if (index == ht->capacity - 1) {
             index = 0;
         } else {
@@ -38,9 +39,15 @@ int find_index(struct HashTable *ht, int key) {
 
 void add(struct HashTable *ht, int key, int value) {
     int idx = avail_index(ht, key);
+    if (ht->data[idx]) {
+        if (ht->data[idx]->deleted == true) {
+            free(ht->data[idx]);
+        }
+    }
     struct Entry *ent = malloc(sizeof(struct Entry));
     ent->key = key;
     ent->value = value;
+    ent->deleted = false;
     ht->data[idx] = ent;
     ht->num_items++;
 }
@@ -52,7 +59,11 @@ int get(struct HashTable *ht, int key) {
 
 bool exists(struct HashTable *ht, int key) {
     int idx = find_index(ht, key);
-    return ht->data[idx] != NULL;
+    return ht->data[idx] != NULL && ht->data[idx]->deleted != true;
 }
 
-void remove(struct HashTable *ht, int key);
+void remove_item(struct HashTable *ht, int key) {
+    int idx = find_index(ht, key);
+    memset(ht->data[idx], 0, sizeof(struct Entry));
+    ht->data[idx]->deleted = true;
+}
