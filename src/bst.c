@@ -72,6 +72,8 @@ bool is_in_tree(struct Node *root, int key) {
     } else {
         return is_in_tree(root->left, key);
     }
+
+    return false;
 }
 
 void print_values(struct Node *root) {
@@ -84,8 +86,63 @@ void print_values(struct Node *root) {
     print_values(root->right);
 }
 
-void delete_tree() {}
+void delete_tree(struct Node *root, struct Node *key) {
+    if (key->left) {
+        delete_tree(root, key->left);
+    } else if (key->right) {
+        delete_tree(root, key->right);
+    }
+    delete_value(root, root, key->key);
+}
 
-void delete_value() {}
+struct Node *next_greater(struct Node *root, struct Node *node) {
+    struct Node *succ;
+    while (root != NULL) {
+        if (root->key > node->key) {
+            succ = root;
+            root = root->left;
+        } else if (root->key < node->key) {
+            root = root->right;
+        } else {
+            return succ;
+        }
+    }
+    return NULL;
+}
 
-struct Node *get_successor(struct Node *root, int key) {}
+struct Node *get_successor(struct Node *root, struct Node *node) {
+    if (node->right != NULL) {
+        return get_min(node->right);
+    } else {
+        return next_greater(root, node);
+    }
+}
+
+struct Node *delete_value(struct Node *root, struct Node *node, int key) {
+    if (node == NULL)
+        return NULL;
+
+    if (key < node->key) {
+        node->left = delete_value(root, node->left, key);
+    } else if (key > node->key) {
+        node->right = delete_value(root, node->right, key);
+    } else {
+        if (node->left == NULL && node->right == NULL) {
+            free(node);
+            node = NULL;
+        } else if (node->left == NULL) {
+            struct Node *temp = node;
+            node = node->right;
+            free(temp);
+        } else if (node->right == NULL) {
+            struct Node *temp = node;
+            node = node->left;
+            free(temp);
+        } else {
+            struct Node *succ = get_successor(root, node);
+            node->key = succ->key;
+            free(succ);
+        }
+    }
+    return node;
+}

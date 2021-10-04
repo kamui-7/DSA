@@ -19,7 +19,9 @@ void print_values(
     struct Node *root); // prints the values in the tree, from min to max
 int get_node_count(struct Node *root);         // get count of values stored
 void insert_leaf(struct Node **root, int key); // insert value into tree
-void delete_tree();
-void delete_value();
-struct Node *get_successor(struct Node *root, int key); // returns next-highest value in tree after given
-                              // value, -1 if none
+void delete_tree(struct Node *root, struct Node *key);
+struct Node *delete_value(struct Node *root, struct Node *node, int key);
+struct Node *
+get_successor(struct Node *root,
+              struct Node *node); // returns next-highest value in tree after
+                                  // given value, -1 if none

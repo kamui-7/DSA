@@ -93,6 +93,29 @@ void it_is_in_tree(void **state) {
     in_tree = is_in_tree(root, 73);
     assert_int_equal(in_tree, false);
 }
+void it_is_a_sucessor(void **state) {
+    struct Node *root = ((struct teststate_t *)(*state))->tree;
+    test_data(&root);
+    struct Node *eight = root->left->right;
+    struct Node *succ = get_successor(root, eight);
+    assert_int_equal(succ->key, 10);
+
+    succ = get_successor(root, root);
+    assert_int_equal(succ->key, 13);
+}
+
+void it_can_delete(void **state) {
+    struct Node *root = ((struct teststate_t *)(*state))->tree;
+    test_data(&root);
+
+    int in_tree = is_in_tree(root, 2);
+    assert_int_equal(in_tree, true);
+
+    delete_value(root, root, 2);
+
+    in_tree = is_in_tree(root, 2);
+    assert_int_equal(in_tree, false);
+}
 
 int main(void) {
     printf("Starting binary search tree tests...\n");
@@ -108,6 +131,10 @@ int main(void) {
                                         test_teardown),
         cmocka_unit_test_setup_teardown(it_is_a_bst, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(it_is_in_tree, test_setup,
+                                        test_teardown),
+        cmocka_unit_test_setup_teardown(it_is_a_sucessor, test_setup,
+                                        test_teardown),
+        cmocka_unit_test_setup_teardown(it_can_delete, test_setup,
                                         test_teardown),
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
