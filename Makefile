@@ -17,7 +17,7 @@ TEST_SRC = $(shell find $(TEST_DIR) -name *.c -type f)
 TEST_OBJ = $(shell echo "$(TEST_SRC:.c=)" | sed -e "s/$(TEST_DIR)\//$(subst /,\/,${TEST_OUT_DIR})\//g")
 
 CFLAGS = $(CC_FLAGS) $(DEBUG) -I$(INC_DIR)
-TEST_LDFLAGS = -lcmocka
+TEST_LDFLAGS = -lcmocka -lm
 
 .PHONY: clean, run, check
 
