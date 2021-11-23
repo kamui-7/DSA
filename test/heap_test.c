@@ -49,7 +49,7 @@ void it_deletes(void **state) {
 void it_gets_size(void **state) {
     struct MaxHeap heap = ((struct teststate_t *)(*state))->heap;
     test_data(&heap);
-    assert_int_equal(get_size(&heap), 4);
+    assert_int_equal(heap_len(&heap), 4);
 }
 
 void it_is_empty(void **state) {
@@ -60,7 +60,7 @@ void it_is_empty(void **state) {
 void it_extracts_max(void **state) {
     struct MaxHeap heap = ((struct teststate_t *)(*state))->heap;
     test_data(&heap);
-    int max = extract_max(&heap);
+    int max = heap_extract_max(&heap);
     assert_int_equal(max, 8);
     assert_int_not_equal(heap_get_max(&heap), 8);
 }
@@ -75,7 +75,7 @@ void it_extracts_max(void **state) {
 
 void it_performs_heapsort(void **state) {
     int arr[] = {23, 3, 42, 18, 7, 21};
-    heapsort(arr, 6);
+    heap_sort(arr, 6);
     assert_int_equal(arr[0], 3);
     assert_int_equal(arr[5], 42);
 }

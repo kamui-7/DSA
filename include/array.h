@@ -6,13 +6,13 @@ struct Array {
     int capacity;
 };
 
-void print_array(struct Array *arr);
-void push(struct Array *arr, int item);
-int find(struct Array *arr, int key);
-bool is_empty(struct Array *arr);
-int at(struct Array *arr, int indx);
-int pop(struct Array *arr);
-void insert(struct Array *arr, int indx, int item);
-void prepend(struct Array *arr, int item);
-void erase(struct Array *arr, int indx);
-void remove_itm(struct Array *arr, int item);
+void array_print(struct Array *arr);
+void array_push(struct Array *arr, int item);
+int array_find(struct Array *arr, int key);
+bool array_empty(struct Array *arr);
+int array_at(struct Array *arr, int indx);
+int array_pop(struct Array *arr);
+void array_insert(struct Array *arr, int indx, int item);
+void array_prepend(struct Array *arr, int item);
+void array_erase(struct Array *arr, int indx);
+void array_remove(struct Array *arr, int item);

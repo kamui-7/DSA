@@ -36,40 +36,40 @@ static int test_teardown(void **state) {
 
 void it_is_empty_ll(void **state) {
     struct ListQueue lq = ((struct teststate_t *)(*state))->lq;
-    bool em = empty_lq(&lq);
+    bool em = lq_empty(&lq);
     assert_int_equal(em, true);
 }
 
 void it_enqueues_and_dequeues_node_ll(void **state) {
     struct ListQueue lq = ((struct teststate_t *)(*state))->lq;
     for (int i = 5; i > 0; i--)
-        enqueue_lq(&lq, i);
-    int first = dequeue_lq(&lq)->data;
-    int second = dequeue_lq(&lq)->data;
+        lq_enqueue(&lq, i);
+    int first = lq_dequeue(&lq)->data;
+    int second = lq_dequeue(&lq)->data;
     assert_int_equal(first, 5);
     assert_int_equal(second, 4);
 }
 
 void it_is_empty_aq(void **state) {
     struct ArrayQueue aq = ((struct teststate_t *)(*state))->aq;
-    bool em = empty_cb(&aq);
+    bool em = cb_empty(&aq);
     assert_int_equal(em, true);
 }
 
 void it_is_full(void **state) {
     struct ArrayQueue aq = ((struct teststate_t *)(*state))->aq;
     for (int i = 5; i > 0; i--)
-        enqueue_cb(&aq, i);
-    bool fl = full_cb(&aq);
+        cb_enqueue(&aq, i);
+    bool fl = cb_full(&aq);
     assert_int_equal(fl, true);
 }
 
 void it_enqueues_and_dequeues_node_cb(void **state) {
     struct ArrayQueue aq = ((struct teststate_t *)(*state))->aq;
     for (int i = 5; i > 0; i--)
-        enqueue_cb(&aq, i);
-    int first = dequeue_cb(&aq);
-    int second = dequeue_cb(&aq);
+        cb_enqueue(&aq, i);
+    int first = cb_dequeue(&aq);
+    int second = cb_dequeue(&aq);
     assert_int_equal(first, 5);
     assert_int_equal(second, 4);
 }

@@ -4,20 +4,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node *front(struct Node *head) {
+struct ListNode *list_front(struct ListNode *head) {
     return head;
 }
 
-struct Node *back(struct Node *head) {
+struct ListNode *list_back(struct ListNode *head) {
     while (head->next != NULL) {
         head = head->next;
     }
     return head;
 }
 
-bool empty(struct Node *head) { return head == NULL; }
+bool list_empty(struct ListNode *head) { return head == NULL; }
 
-int size(struct Node *head) {
+int list_len(struct ListNode *head) {
     int s = 0;
     while (head != NULL) {
         head = head->next;
@@ -26,7 +26,7 @@ int size(struct Node *head) {
     return s;
 }
 
-struct Node *value_at(struct Node *head, int indx) {
+struct ListNode *list_at(struct ListNode *head, int indx) {
     int s = 0;
     while (head != NULL) {
         if (s == indx) {
@@ -38,7 +38,7 @@ struct Node *value_at(struct Node *head, int indx) {
     return NULL;
 }
 
-void print_ll(struct Node *head) {
+void list_print(struct ListNode *head) {
     while (head != NULL) {
         printf("%d ", head->data);
         head = head->next;
@@ -46,15 +46,15 @@ void print_ll(struct Node *head) {
     printf("\n");
 }
 
-struct Node *create_elm(int key) {
-    struct Node *new_elm = malloc(sizeof(struct Node));
+struct ListNode *list_create_elm(int key) {
+    struct ListNode *new_elm = malloc(sizeof(struct ListNode));
     new_elm->data = key;
     new_elm->next = NULL;
     return new_elm;
 }
 
-void push_front(struct Node **head_ptr, int key) {
-    struct Node *new_elm = create_elm(key);
+void list_push_front(struct ListNode **head_ptr, int key) {
+    struct ListNode *new_elm = list_create_elm(key);
 
     if (*head_ptr == NULL) {
         *head_ptr = new_elm;
@@ -64,24 +64,24 @@ void push_front(struct Node **head_ptr, int key) {
     }
 }
 
-struct Node *pop_front(struct Node **head_ptr) {
-    struct Node *front = *head_ptr;
+struct ListNode *list_pop_front(struct ListNode **head_ptr) {
+    struct ListNode *front = *head_ptr;
     *head_ptr = (*head_ptr)->next;
     return front;
 }
 
-void push_back(struct Node **head_ptr, int key) {
-    struct Node *new_elm = create_elm(key);
+void list_push_back(struct ListNode **head_ptr, int key) {
+    struct ListNode *new_elm = list_create_elm(key);
     if (!*head_ptr) {
         *head_ptr = new_elm;
     } else {
-        struct Node *back_elm = back(*head_ptr);
+        struct ListNode *back_elm = list_back(*head_ptr);
         back_elm->next = new_elm;
     }
 }
 
-struct Node *pop_back(struct Node **head_ptr) {
-    struct Node *second_to_last = *head_ptr;
+struct ListNode *list_pop_back(struct ListNode **head_ptr) {
+    struct ListNode *second_to_last = *head_ptr;
     if (!second_to_last) {
         return NULL;
     }
@@ -89,13 +89,13 @@ struct Node *pop_back(struct Node **head_ptr) {
     while (second_to_last->next->next != NULL) {
         second_to_last = second_to_last->next;
     }
-    struct Node *last = second_to_last->next;
+    struct ListNode *last = second_to_last->next;
     second_to_last->next = NULL;
     return last;
 }
 
-void insert_node(struct Node **head_ptr, int index, int key) {
-    struct Node *head = *head_ptr;
+void list_insert(struct ListNode **head_ptr, int index, int key) {
+    struct ListNode *head = *head_ptr;
     int s = 0;
     while (head != NULL && s < index - 1) {
         head = head->next;
@@ -104,14 +104,14 @@ void insert_node(struct Node **head_ptr, int index, int key) {
     if (!head) {
         return;
     }
-    struct Node *new_elm = create_elm(key);
-    struct Node *after_indx = head->next;
+    struct ListNode *new_elm = list_create_elm(key);
+    struct ListNode *after_indx = head->next;
     head->next = new_elm;
     new_elm->next = after_indx;
 }
 
-void erase_node(struct Node **head_ptr, int index) {
-    struct Node *head = *head_ptr;
+void list_erase(struct ListNode **head_ptr, int index) {
+    struct ListNode *head = *head_ptr;
     int s = 0;
     while (head != NULL && s < index - 1) {
         head = head->next;
@@ -120,19 +120,19 @@ void erase_node(struct Node **head_ptr, int index) {
     if (!head) {
         return;
     }
-    struct Node *after_indx = head->next;
+    struct ListNode *after_indx = head->next;
     head->next = after_indx->next;
     free(after_indx);
 }
 
-struct Node *value_n_from_end(struct Node *head_ptr, int n) {
-    int indx = (size(head_ptr) - 1) - n;
-    return value_at(head_ptr, indx);
+struct ListNode *list_n_from_end(struct ListNode *head_ptr, int n) {
+    int indx = (list_len(head_ptr) - 1) - n;
+    return list_at(head_ptr, indx);
 }
 
-void remove_value(struct Node **head_ptr, int value) {
-    struct Node *head = *head_ptr;
-    struct Node *prev = NULL;
+void list_remove(struct ListNode **head_ptr, int value) {
+    struct ListNode *head = *head_ptr;
+    struct ListNode *prev = NULL;
     while (head != NULL) {
         if (head->data == value) {
             if (!prev) {
@@ -148,10 +148,10 @@ void remove_value(struct Node **head_ptr, int value) {
     }
 }
 
-void reverse(struct Node **head_ptr) {
-    struct Node *head = *head_ptr;
-    struct Node *next = head->next;
-    struct Node *prev = NULL;
+void list_reverse(struct ListNode **head_ptr) {
+    struct ListNode *head = *head_ptr;
+    struct ListNode *next = head->next;
+    struct ListNode *prev = NULL;
 
     while (head != NULL) {
         if (!prev) {

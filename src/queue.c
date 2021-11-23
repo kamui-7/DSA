@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void enqueue_lq(struct ListQueue *lq, int value) {
-    struct Node *new_node = malloc(sizeof(struct Node));
+void lq_enqueue(struct ListQueue *lq, int value) {
+    struct ListNode *new_node = malloc(sizeof(struct ListNode));
     new_node->data = value;
 
     if (!lq->head) {
@@ -17,17 +17,17 @@ void enqueue_lq(struct ListQueue *lq, int value) {
     }
 }
 
-struct Node *dequeue_lq(struct ListQueue *lq) {
-    struct Node *head = lq->head;
-    struct Node *temp = head->next;
+struct ListNode *lq_dequeue(struct ListQueue *lq) {
+    struct ListNode *head = lq->head;
+    struct ListNode *temp = head->next;
     head->next = NULL;
     lq->head = temp;
     return head;
 }
 
-bool empty_lq(struct ListQueue *lq) { return lq->head == NULL; }
+bool lq_empty(struct ListQueue *lq) { return lq->head == NULL; }
 
-void enqueue_cb(struct ArrayQueue *aq, int value) {
+void cb_enqueue(struct ArrayQueue *aq, int value) {
     if (aq->count == aq->capacity) {
         return;
     }
@@ -39,7 +39,7 @@ void enqueue_cb(struct ArrayQueue *aq, int value) {
     aq->count++;
 }
 
-int dequeue_cb(struct ArrayQueue *aq) {
+int cb_dequeue(struct ArrayQueue *aq) {
     int popped = *aq->tail;
     aq->tail = aq->tail + sizeof(int);
     if (aq->tail == aq->buffer_end) {
@@ -49,5 +49,5 @@ int dequeue_cb(struct ArrayQueue *aq) {
     return popped;
 }
 
-bool empty_cb(struct ArrayQueue *aq) { return aq->count == 0; }
-bool full_cb(struct ArrayQueue *aq) { return aq->count == aq->capacity; }
+bool cb_empty(struct ArrayQueue *aq) { return aq->count == 0; }
+bool cb_full(struct ArrayQueue *aq) { return aq->count == aq->capacity; }

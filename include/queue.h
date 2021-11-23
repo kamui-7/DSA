@@ -3,8 +3,8 @@
 #include "linked_list.h"
 
 struct ListQueue {
-    struct Node *head;
-    struct Node *tail;
+    struct ListNode *head;
+    struct ListNode *tail;
 };
 
 struct ArrayQueue {
@@ -16,11 +16,11 @@ struct ArrayQueue {
     int *buffer_end;
 };
 
-void enqueue_lq(struct ListQueue *lq, int value);
-struct Node *dequeue_lq(struct ListQueue *lq);
-bool empty_lq(struct ListQueue *lq);
+void lq_enqueue(struct ListQueue *lq, int value);
+struct ListNode *lq_dequeue(struct ListQueue *lq);
+bool lq_empty(struct ListQueue *lq);
 
-void enqueue_cb(struct ArrayQueue *aq, int value);
-int dequeue_cb(struct ArrayQueue *aq);
-bool empty_cb(struct ArrayQueue *aq);
-bool full_cb(struct ArrayQueue *aq);
+void cb_enqueue(struct ArrayQueue *aq, int value);
+int cb_dequeue(struct ArrayQueue *aq);
+bool cb_empty(struct ArrayQueue *aq);
+bool cb_full(struct ArrayQueue *aq);

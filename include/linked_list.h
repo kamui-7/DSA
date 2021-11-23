@@ -1,22 +1,22 @@
 #include <stdbool.h>
 
-struct Node {
+struct ListNode {
     int data;
-    struct Node *next;
+    struct ListNode *next;
 };
 
-struct Node *front(struct Node *head);
-struct Node *back(struct Node *head);
-bool empty(struct Node *head);
-int size(struct Node *head);
-struct Node *value_at(struct Node *head, int indx);
-void print_ll(struct Node *head);
-void push_front(struct Node **head_ptr, int key);
-struct Node *pop_front(struct Node **head_ptr);
-void push_back(struct Node **head_ptr, int key);
-struct Node *pop_back(struct Node **head_ptr);
-void insert_node(struct Node **head_ptr, int index, int key);
-void erase_node(struct Node **head_ptr, int index);
-struct Node *value_n_from_end(struct Node *head_ptr, int n);
-void remove_value(struct Node **head_ptr, int value);
-void reverse(struct Node **head_ptr);
+struct ListNode *list_front(struct ListNode *head);
+struct ListNode *list_back(struct ListNode *head);
+bool list_empty(struct ListNode *head);
+int list_len(struct ListNode *head);
+struct ListNode *list_at(struct ListNode *head, int indx);
+void list_print(struct ListNode *head);
+void list_push_front(struct ListNode **head_ptr, int key);
+struct ListNode *list_pop_front(struct ListNode **head_ptr);
+void list_push_back(struct ListNode **head_ptr, int key);
+struct ListNode *list_pop_back(struct ListNode **head_ptr);
+void list_insert(struct ListNode **head_ptr, int index, int key);
+void list_erase(struct ListNode **head_ptr, int index);
+struct ListNode *list_n_from_end(struct ListNode *head_ptr, int n);
+void list_remove(struct ListNode **head_ptr, int value);
+void list_reverse(struct ListNode **head_ptr);

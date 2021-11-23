@@ -17,7 +17,7 @@ TEST_SRC = $(shell find $(TEST_DIR) -name *.c -type f)
 TEST_OBJ = $(shell echo "$(TEST_SRC:.c=)" | sed -e "s/$(TEST_DIR)\//$(subst /,\/,${TEST_OUT_DIR})\//g")
 
 CFLAGS = $(CC_FLAGS) $(DEBUG) -I$(INC_DIR)
-TEST_LDFLAGS = -lcmocka -lm
+TEST_LDFLAGS = -lcmocka
 
 .PHONY: clean, run, check
 
@@ -33,7 +33,7 @@ $(TEST_OBJ): $(TEST_OUT_DIR)/%: $(TEST_DIR)/%.c  | $(TEST_OUT_DIR)/
 	$(CC) $(CFLAGS) $(TEST_LDFLAGS) $< -o $@ $(OUT_DIR)/$(TARGET_LIB)
 
 run: $(OUT_DIR)/$(TARGET_LIB) $(TEST_OBJ) 
-	for tb in $^ ; do \
+	for tb in $(TEST_OBJ) ; do \
 		eval $$tb; \
 		echo; \
 	done

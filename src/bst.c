@@ -3,49 +3,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node *get_min(struct Node *root) {
+struct BstNode *bst_get_min(struct BstNode *root) {
     while (root->left) {
         root = root->left;
     }
     return root;
 }
 
-struct Node *get_max(struct Node *root) {
+struct BstNode *bst_get_max(struct BstNode *root) {
     while (root->right) {
         root = root->right;
     }
     return root;
 }
 
-void insert_leaf(struct Node **root, int key) {
+void bst_insert(struct BstNode **root, int key) {
     if (*root == NULL) {
-        struct Node *new_node = malloc(sizeof(struct Node));
+        struct BstNode *new_node = malloc(sizeof(struct BstNode));
         new_node->left = NULL;
         new_node->right = NULL;
         new_node->key = key;
         *root = new_node;
     } else if (key <= (*root)->key) {
-        insert_leaf(&(*root)->left, key);
+        bst_insert(&(*root)->left, key);
     } else {
-        insert_leaf(&(*root)->right, key);
+        bst_insert(&(*root)->right, key);
     }
 }
 
-int get_height(struct Node *root) {
+int bst_get_height(struct BstNode *root) {
     if (root == NULL) {
         return 0;
     }
-    return 1 + MAX(get_height(root->left), get_height(root->right));
+    return 1 + MAX(bst_get_height(root->left), bst_get_height(root->right));
 }
 
-int get_node_count(struct Node *root) {
+int bst_len(struct BstNode *root) {
     if (root == NULL) {
         return 0;
     }
-    return 1 + get_node_count(root->left) + get_node_count(root->right);
+    return 1 + bst_len(root->left) + bst_len(root->right);
 }
 
-bool is_binary_search_tree(struct Node *root, int min, int max) {
+bool valid_bst(struct BstNode *root, int min, int max) {
     if (root == NULL) {
         return true;
     }
@@ -54,11 +54,11 @@ bool is_binary_search_tree(struct Node *root, int min, int max) {
         return false;
     }
 
-    return is_binary_search_tree(root->left, min, root->key) &&
-           is_binary_search_tree(root->right, root->key, max);
+    return valid_bst(root->left, min, root->key) &&
+           valid_bst(root->right, root->key, max);
 }
 
-bool is_in_tree(struct Node *root, int key) {
+bool bst_exists(struct BstNode *root, int key) {
     if (root == NULL) {
         return false;
     }
@@ -68,15 +68,15 @@ bool is_in_tree(struct Node *root, int key) {
     }
 
     if (key > root->key) {
-        return is_in_tree(root->right, key);
+        return bst_exists(root->right, key);
     } else {
-        return is_in_tree(root->left, key);
+        return bst_exists(root->left, key);
     }
 
     return false;
 }
 
-void print_values(struct Node *root) {
+void print_values(struct BstNode *root) {
     if (root == NULL) {
         return;
     }
@@ -86,17 +86,17 @@ void print_values(struct Node *root) {
     print_values(root->right);
 }
 
-void delete_tree(struct Node *root, struct Node *key) {
+void bst_delete_all(struct BstNode *root, struct BstNode *key) {
     if (key->left) {
-        delete_tree(root, key->left);
+        bst_delete_all(root, key->left);
     } else if (key->right) {
-        delete_tree(root, key->right);
+        bst_delete_all(root, key->right);
     }
-    delete_value(root, root, key->key);
+    bst_delete(root, root, key->key);
 }
 
-struct Node *next_greater(struct Node *root, struct Node *node) {
-    struct Node *succ;
+struct BstNode *bst_next_greater(struct BstNode *root, struct BstNode *node) {
+    struct BstNode *succ;
     while (root != NULL) {
         if (root->key > node->key) {
             succ = root;
@@ -110,36 +110,37 @@ struct Node *next_greater(struct Node *root, struct Node *node) {
     return NULL;
 }
 
-struct Node *get_successor(struct Node *root, struct Node *node) {
+struct BstNode *bst_get_successor(struct BstNode *root, struct BstNode *node) {
     if (node->right != NULL) {
-        return get_min(node->right);
+        return bst_get_min(node->right);
     } else {
-        return next_greater(root, node);
+        return bst_next_greater(root, node);
     }
 }
 
-struct Node *delete_value(struct Node *root, struct Node *node, int key) {
+struct BstNode *bst_delete(struct BstNode *root, struct BstNode *node,
+                           int key) {
     if (node == NULL)
         return NULL;
 
     if (key < node->key) {
-        node->left = delete_value(root, node->left, key);
+        node->left = bst_delete(root, node->left, key);
     } else if (key > node->key) {
-        node->right = delete_value(root, node->right, key);
+        node->right = bst_delete(root, node->right, key);
     } else {
         if (node->left == NULL && node->right == NULL) {
             free(node);
             node = NULL;
         } else if (node->left == NULL) {
-            struct Node *temp = node;
+            struct BstNode *temp = node;
             node = node->right;
             free(temp);
         } else if (node->right == NULL) {
-            struct Node *temp = node;
+            struct BstNode *temp = node;
             node = node->left;
             free(temp);
         } else {
-            struct Node *succ = get_successor(root, node);
+            struct BstNode *succ = bst_get_successor(root, node);
             node->key = succ->key;
             free(succ);
         }

@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <memory.h>
 
-int hash(int k, int m) { return k % m; }
+int ht_hash(int k, int m) { return k % m; }
 
-int avail_index(struct HashTable *ht, int key) {
-    int index = hash(key, ht->capacity);
+int ht_avail_index(struct HashTable *ht, int key) {
+    int index = ht_hash(key, ht->capacity);
     if (ht->num_items == ht->capacity) {
         return -1;
     }
@@ -19,8 +19,8 @@ int avail_index(struct HashTable *ht, int key) {
     return index;
 }
 
-int find_index(struct HashTable *ht, int key) {
-    int idx = hash(key, ht->capacity);
+int ht_find_index(struct HashTable *ht, int key) {
+    int idx = ht_hash(key, ht->capacity);
     int start_idx = idx;
     bool passed_circular = false;
     while (ht->data[idx] != NULL && ht->data[idx]->key != key) {
@@ -37,14 +37,14 @@ int find_index(struct HashTable *ht, int key) {
     return idx;
 }
 
-void add(struct HashTable *ht, int key, int value) {
-    int idx = avail_index(ht, key);
+void ht_add(struct HashTable *ht, int key, int value) {
+    int idx = ht_avail_index(ht, key);
     if (ht->data[idx]) {
         if (ht->data[idx]->deleted == true) {
             free(ht->data[idx]);
         }
     }
-    struct Entry *ent = malloc(sizeof(struct Entry));
+    struct HtEntry *ent = malloc(sizeof(struct HtEntry));
     ent->key = key;
     ent->value = value;
     ent->deleted = false;
@@ -52,18 +52,18 @@ void add(struct HashTable *ht, int key, int value) {
     ht->num_items++;
 }
 
-int get(struct HashTable *ht, int key) {
-    int idx = find_index(ht, key);
+int ht_get(struct HashTable *ht, int key) {
+    int idx = ht_find_index(ht, key);
     return ht->data[idx]->value;
 }
 
-bool exists(struct HashTable *ht, int key) {
-    int idx = find_index(ht, key);
+bool ht_exists(struct HashTable *ht, int key) {
+    int idx = ht_find_index(ht, key);
     return ht->data[idx] != NULL && ht->data[idx]->deleted != true;
 }
 
-void remove_item(struct HashTable *ht, int key) {
-    int idx = find_index(ht, key);
-    memset(ht->data[idx], 0, sizeof(struct Entry));
+void ht_remove(struct HashTable *ht, int key) {
+    int idx = ht_find_index(ht, key);
+    memset(ht->data[idx], 0, sizeof(struct HtEntry));
     ht->data[idx]->deleted = true;
 }
