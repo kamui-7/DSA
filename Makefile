@@ -32,12 +32,6 @@ $(OBJ): $(OUT_DIR)/%.o: $(SRC_DIR)/%.c | $(OUT_DIR)/
 $(TEST_OBJ): $(TEST_OUT_DIR)/%: $(TEST_DIR)/%.c  | $(TEST_OUT_DIR)/
 	$(CC) $(CFLAGS) $(TEST_LDFLAGS) $< -o $@ $(OUT_DIR)/$(TARGET_LIB)
 
-run: $(OUT_DIR)/$(TARGET_LIB) $(TEST_OBJ) 
-	for tb in $(TEST_OBJ) ; do \
-		eval $$tb; \
-		echo; \
-	done
-
 clean:
 	$(RM) $(OUT_DIR)
 
@@ -46,4 +40,3 @@ $(OUT_DIR)/:
 
 $(TEST_OUT_DIR)/:
 	mkdir -p $@
-

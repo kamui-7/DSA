@@ -11,6 +11,7 @@ struct ListNode *list_front(struct ListNode *head) {
 struct ListNode *list_back(struct ListNode *head) {
     while (head->next != NULL) {
         head = head->next;
+        
     }
     return head;
 }

@@ -5,3 +5,9 @@ build/
 *.so.*
 .cache/
 compile_commands.json
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.pytest_cache/

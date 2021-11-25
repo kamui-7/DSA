@@ -8,5 +8,6 @@ You will need [cmocka](https://cmocka.org/) to be able to run the tests. After e
 
 ```sh
 $ git clone https://github.com/kamui-fin/dsa.git
-$ make run
+$ make
+$ ./run.sh all
 ```
