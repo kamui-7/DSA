@@ -1,6 +1,5 @@
-import pytest
-from pprint import pprint
 from graphs import *
+import pytest
 
 
 @pytest.fixture
@@ -93,7 +92,18 @@ def test_detect_cycle():
         3: [3]
     }
 
-    assert check_for_cycle(graph)
+    assert check_for_cycle(graph) == True
+
+    graph = {
+        0: [],
+        1: [],
+        2: [3],
+        3: [1],
+        4: [0, 1],
+        5: [2, 0]
+    }
+
+    assert check_for_cycle(graph) == False
 
 
 def test_topological_order():
@@ -106,3 +116,56 @@ def test_topological_order():
         5: [2, 0]
     }
     assert top_sort(graph) == [5, 4, 2, 3, 1, 0]
+
+
+def test_count_connected_components():
+    graph = {
+        3: [],
+        4: [6],
+        6: [4, 5, 7, 8],
+        8: [6],
+        7: [6],
+        5: [6],
+        1: [2],
+        2: [1]
+    }
+    assert count_connected(graph) == 3
+
+
+def test_get_sccs(capfd):
+    graph = {
+        0: [1],
+        1: [2],
+        2: [3, 4],
+        3: [0],
+        4: [5],
+        5: [6],
+        6: [4, 7],
+        7: []
+    }
+    list_strongly_connected(graph, 0)
+    out, err = capfd.readouterr()
+    assert out == "0 3 2 1 \n4 6 5 \n7 \n"
+
+
+def test_bipartite_check():
+    graph = {
+        0: [1, 2],
+        1: [0, 4],
+        2: [0, 3],
+        3: [2, 5],
+        4: [1, 5],
+        5: [3, 4]
+    }
+
+    assert check_bipartite(graph, 0)
+
+    graph = {
+        0: [1, 2],
+        1: [0, 3],
+        2: [0, 4],
+        3: [1, 4],
+        4: [3, 2]
+    }
+
+    assert not check_bipartite(graph, 0)

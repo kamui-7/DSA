@@ -4,7 +4,7 @@ DEBUG = -DDEBUG -g
 RM = rm -rf
 
 OUT_DIR = build
-SRC_DIR = src
+SRC_DIR = dsa
 INC_DIR = include
 TEST_DIR = test
 TEST_OUT_DIR = build/bin

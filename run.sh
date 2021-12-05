@@ -23,7 +23,7 @@ function _cmocka() {
 
 # pytest runner
 function _pytest() {
-    PYTHONPATH=src pytest test/ $@
+    PYTHONPATH=dsa pytest test/ $@
 }
 
 if [[ -z $1 ]]; then

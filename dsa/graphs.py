@@ -2,8 +2,12 @@ from collections import deque
 from pprint import pprint
 from dataclasses import dataclass, field
 from typing import List, Tuple
+from collections import defaultdict
 import heapq
 import sys
+
+RED = 0
+BLUE = 1
 
 
 def matrix_get_neighbors(graph, indx):
@@ -21,7 +25,7 @@ def adjlist_neighbors(graph, point): return graph[point]
 
 def dfs_rec(graph, point, visited=[], get_neighbors=adjlist_neighbors):
     if point not in visited:
-        print(point, end="")
+        print(point, end=" ")
         visited.append(point)
         for neighbor in get_neighbors(graph, point):
             dfs_rec(graph, neighbor, visited, get_neighbors)
@@ -155,8 +159,22 @@ def mst(graph, start) -> int:
     return cost
 
 
-def check_for_cycle(graph) -> bool:
+def cycle_dfs(graph, vertex, visited):
+    for neighbor in graph[vertex]:
+        if neighbor in visited:
+            return True
+        else:
+            visited.append(vertex)
+            return cycle_dfs(graph, neighbor, visited)
     return False
+
+
+def check_for_cycle(graph) -> bool:
+    visited = []
+
+    for vertex in graph.keys():
+        if vertex not in visited:
+            return cycle_dfs(graph, vertex, visited)
 
 
 def top_dfs(graph, node, visited, top_order):
@@ -182,13 +200,80 @@ def top_sort(graph):
     return list(reversed(top_order))
 
 
+def count_dfs(graph, node, visited):
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            visited.append(neighbor)
+            count_dfs(graph, neighbor, visited)
+
+
 def count_connected(graph):
-    pass
+    count = 0
+    visited = []
+    for node in graph.keys():
+        if node not in visited:
+            visited.append(node)
+            count_dfs(graph, node, visited)
+            count += 1
+    return count
 
 
-def list_strongly_connected(graph):
-    pass
+def reverse(graph):
+    new = defaultdict(list)
+    for source, connected in graph.items():
+        for node in connected:
+            new[node].append(source)
+    return new
 
 
-def check_bipartite(graph):
-    pass
+def scc_dfs(graph, start, visited, stack):
+    visited.append(start)
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            scc_dfs(graph, neighbor, visited, stack)
+    stack.append(start)
+
+
+def list_strongly_connected(graph, start):
+    visited = []
+    stack = []
+    scc_dfs(graph, start, visited, stack)
+    graph = reverse(graph)
+
+    visited = []
+    while len(stack) > 0:
+        src = stack.pop()
+        if src not in visited:
+            dfs_rec(graph, src, visited)
+            print()
+
+
+def opposite_color(color):
+    if color == RED:
+        return BLUE
+    else:
+        return RED
+
+
+def check_bipartite(graph, start):
+    if len(graph.keys()) % 2 != 0:
+        return False
+
+    colors = {start: RED}
+    visited = []
+    queue = deque([start])
+
+    while len(queue) > 0:
+        curr = queue.popleft()
+        if curr in visited:
+            continue
+
+        visited.append(curr)
+        for neighbor in graph[curr]:
+            queue.append(neighbor)
+            if neighbor in colors:
+                if colors[neighbor] == colors[curr]:
+                    return False
+            colors[neighbor] = opposite_color(colors[curr])
+
+    return True
